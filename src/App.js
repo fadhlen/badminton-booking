@@ -120,6 +120,10 @@ export default function CourtBookingSystem() {
 
     const key = bookingKey(selectedCourt, date, slot);
     if (bookings[key]) {
+      if (bookings[key].player !== userName) {
+        showToast("⚠ You can only cancel your own booking!");
+        return;
+      }
       setModal({ mode: "cancel", bookingKey: key, date, slot });
     } else {
       setPlayerName(userName);
@@ -210,11 +214,11 @@ export default function CourtBookingSystem() {
           <div style={{ fontSize: 48, marginBottom: 16 }}>🏸</div>
           <div style={{ fontSize: 11, letterSpacing: 4, color: "#0277bd", textTransform: "uppercase", marginBottom: 8 }}>Welcome to</div>
           <div style={{ fontSize: 28, fontWeight: 700, marginBottom: 6 }}>Taman Heliconia</div>
-          <div style={{ fontSize: 13, color: "#ffffff", letterSpacing: 3, textTransform: "uppercase", marginBottom: 6 }}>Court Booking</div>
-          <div style={{ fontSize: 12, color: "#ffffff", fontStyle: "italic", marginBottom: 40 }}>Siapa cepat, Dia dapat</div>
+          <div style={{ fontSize: 13, color: "#555", letterSpacing: 3, textTransform: "uppercase", marginBottom: 6 }}>Court Booking</div>
+          <div style={{ fontSize: 12, color: "#444", fontStyle: "italic", marginBottom: 40 }}>Siapa cepat, Dia dapat</div>
 
           <div style={{ textAlign: "left", marginBottom: 12 }}>
-            <label style={{ fontSize: 11, letterSpacing: 2, color: "#ffffff", textTransform: "uppercase" }}>Enter your name to continue</label>
+            <label style={{ fontSize: 11, letterSpacing: 2, color: "#555", textTransform: "uppercase" }}>Enter your name to continue</label>
             <input
               value={welcomeName}
               onChange={(e) => setWelcomeName(e.target.value)}
@@ -256,7 +260,7 @@ export default function CourtBookingSystem() {
             Enter
           </button>
 
-          <div style={{ marginTop: 24, fontSize: 11, color: "#ffffff" }}>
+          <div style={{ marginTop: 24, fontSize: 11, color: "#333" }}>
             ⏰ Bookings open daily from <span style={{ color: "#0277bd" }}>8:00 AM</span>
           </div>
         </div>
