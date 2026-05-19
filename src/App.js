@@ -214,7 +214,7 @@ export default function CourtBookingSystem() {
           <div style={{ fontSize: 48, marginBottom: 16 }}>🏸</div>
           <div style={{ fontSize: 11, letterSpacing: 4, color: "#0277bd", textTransform: "uppercase", marginBottom: 8 }}>Welcome to</div>
           <div style={{ fontSize: 28, fontWeight: 700, marginBottom: 6 }}>Taman Heliconia</div>
-          <div style={{ fontSize: 13, color: "#555", letterSpacing: 3, textTransform: "uppercase", marginBottom: 6 }}>Court Booking</div>
+          <div style={{ fontSize: 13, color: "#ffffff", letterSpacing: 3, textTransform: "uppercase", marginBottom: 6 }}>Court Booking</div>
           <div style={{ fontSize: 12, color: "#444", fontStyle: "italic", marginBottom: 40 }}>Siapa cepat, Dia dapat</div>
 
           <div style={{ textAlign: "left", marginBottom: 12 }}>
