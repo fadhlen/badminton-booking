@@ -260,7 +260,7 @@ export default function CourtBookingSystem() {
             Enter
           </button>
 
-          <div style={{ marginTop: 24, fontSize: 11, color: "#333" }}>
+          <div style={{ marginTop: 24, fontSize: 11, color: "#ffffff" }}>
             ⏰ Bookings open daily from <span style={{ color: "#0277bd" }}>8:00 AM</span>
           </div>
         </div>
