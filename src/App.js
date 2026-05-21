@@ -27,10 +27,6 @@ const SLOTS = [
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-// Bright teal/green accent
-const COURT_COLORS = {
-  1: { accent: "#00897b", light: "#b2dfdb", dark: "#004d40" },
-};
 
 // Palette
 const C = {
