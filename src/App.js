@@ -80,7 +80,7 @@ export default function CourtBookingSystem() {
   const [uploadedImage, setUploadedImage] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const SPECIAL_NAMES = ["timun", "peruz", "tambun", "aiman fairuz", "aiman", "fairuz", "ateman", "tairuz", "eman", "man"];
+  const SPECIAL_NAMES = ["timun", "peruz", "tambun", "aiman fairuz", "aiman", "fairuz", "ateman", "tairuz", "eman", "man", "eiman feyruz"];
   const isSpecialName = (name) => SPECIAL_NAMES.includes(name.trim().toLowerCase());
 
   const weekDates = getWeekDates(weekOffset);
@@ -202,7 +202,7 @@ export default function CourtBookingSystem() {
     return (
       <div style={{
         minHeight: "100vh",
-        background: "linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 50%, #16213e 100%)",
+        background: "linear-gradient(135deg, #0f0f0f 0%, #393979 50%, #5e82e7 100%)",
         fontFamily: "'Georgia', 'Times New Roman', serif",
         color: "#f0ede8",
         display: "flex", alignItems: "center", justifyContent: "center",
