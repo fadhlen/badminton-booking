@@ -28,9 +28,6 @@ const SLOTS = [
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 
-const COURT_COLORS = {
-  1: { accent: "#4f46e5", light: "#b2dfdb", dark: "#004d40" },
-};
 
 // Palette
 const C = {
@@ -105,7 +102,7 @@ export default function CourtBookingSystem() {
 
   const weekDates = getWeekDates(weekOffset);
   const court = COURTS[0];
-  const colors = COURT_COLORS[1];
+
 
   useEffect(() => {
     const unsub = onSnapshot(collection(db, "bookings"), (snapshot) => {
