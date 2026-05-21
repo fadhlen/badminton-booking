@@ -1,8 +1,7 @@
-
 import { useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, onSnapshot, addDoc, deleteDoc, doc } from "firebase/firestore";
- 
+
 const firebaseConfig = {
   apiKey: "AIzaSyC0L5t-kSbn_hhFvHxyRxh8AMTMapoS0PE",
   authDomain: "heli-court.firebaseapp.com",
@@ -12,27 +11,27 @@ const firebaseConfig = {
   appId: "1:1033654721781:web:727447ab6b7acca3a1f9bc",
   measurementId: "G-19FBSB7T10"
 };
- 
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
- 
+
 const COURTS = [
   { id: 1, name: "Badminton Court", type: "Badminton", surface: "Synthetic" },
 ];
- 
+
 const SLOTS = [
   "07:00", "08:00", "09:00", "10:00", "11:00",
   "12:00", "13:00", "14:00", "15:00", "16:00",
   "17:00", "18:00", "19:00", "20:00", "21:00",
 ];
- 
+
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
- 
+
 // Bright teal/green accent
 const COURT_COLORS = {
   1: { accent: "#00897b", light: "#b2dfdb", dark: "#004d40" },
 };
- 
+
 // Palette
 const C = {
   bg: "#f0faf8",
@@ -53,7 +52,7 @@ const C = {
   success: "#2e7d32",
   successLight: "#e8f5e9",
 };
- 
+
 function getWeekDates(offset = 0) {
   const now = new Date();
   const dayOfWeek = now.getDay();
@@ -65,27 +64,27 @@ function getWeekDates(offset = 0) {
     return d;
   });
 }
- 
+
 function dateKey(date) {
   return date.toISOString().split("T")[0];
 }
- 
+
 function isTodayOrFuture(date) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   return date >= today;
 }
- 
+
 function isToday(date) {
   const today = new Date();
   return dateKey(date) === dateKey(today);
 }
- 
+
 function canBookNow() {
   const now = new Date();
   return now.getHours() >= 8;
 }
- 
+
 export default function CourtBookingSystem() {
   const [weekOffset, setWeekOffset] = useState(0);
   const [selectedCourt] = useState(1);
@@ -100,14 +99,14 @@ export default function CourtBookingSystem() {
   const [animKey, setAnimKey] = useState(0);
   const [uploadedImage, setUploadedImage] = useState(null);
   const [loading, setLoading] = useState(true);
- 
+
   const SPECIAL_NAMES = ["timun", "peruz", "tambun", "aiman fairuz", "aiman", "fairuz", "ateman", "tairuz", "eman", "man", "eiman feyruz"];
   const isSpecialName = (name) => SPECIAL_NAMES.includes(name.trim().toLowerCase());
- 
+
   const weekDates = getWeekDates(weekOffset);
   const court = COURTS[0];
   const colors = COURT_COLORS[1];
- 
+
   useEffect(() => {
     const unsub = onSnapshot(collection(db, "bookings"), (snapshot) => {
       const data = {};
@@ -121,11 +120,11 @@ export default function CourtBookingSystem() {
     });
     return () => unsub();
   }, []);
- 
+
   function bookingKey(courtId, date, slot) {
     return `${courtId}_${dateKey(date)}_${slot}`;
   }
- 
+
   function openBook(date, slot) {
     if (!isToday(date)) {
       showToast("⚠ You can only book for today!");
@@ -147,7 +146,7 @@ export default function CourtBookingSystem() {
       setModal({ mode: "book", bookingKey: key, date, slot });
     }
   }
- 
+
   async function confirmBooking() {
     if (!playerName.trim()) return;
     if (isSpecialName(playerName) && !uploadedImage) {
@@ -171,7 +170,7 @@ export default function CourtBookingSystem() {
       showToast("❌ Failed to book. Try again.");
     }
   }
- 
+
   async function confirmCancel() {
     const booking = bookings[modal.bookingKey];
     if (!booking?.firestoreId) return;
@@ -183,7 +182,7 @@ export default function CourtBookingSystem() {
       showToast("❌ Failed to cancel. Try again.");
     }
   }
- 
+
   async function cancelBookingByKey(key) {
     const booking = bookings[key];
     if (!booking?.firestoreId) return;
@@ -194,24 +193,24 @@ export default function CourtBookingSystem() {
       showToast("❌ Failed to cancel. Try again.");
     }
   }
- 
+
   function showToast(msg) {
     setToast(msg);
     setTimeout(() => setToast(null), 3000);
   }
- 
+
   function myBookings() {
     return Object.entries(bookings)
       .filter(([, b]) => b.player === userName)
       .sort(([, a], [, b2]) => new Date(a.date) - new Date(b2.date));
   }
- 
+
   useEffect(() => {
     setAnimKey((k) => k + 1);
   }, [weekOffset]);
- 
+
   const totalBookings = Object.keys(bookings).length;
- 
+
   // Welcome screen
   if (showWelcome) {
     return (
@@ -231,7 +230,7 @@ export default function CourtBookingSystem() {
           <div style={{ fontSize: 30, fontWeight: 700, marginBottom: 6, color: "#fff" }}>Taman Heliconia</div>
           <div style={{ fontSize: 13, color: "rgba(255,255,255,0.85)", letterSpacing: 3, textTransform: "uppercase", marginBottom: 6 }}>Court Booking</div>
           <div style={{ fontSize: 13, color: "rgba(255,255,255,0.7)", fontStyle: "italic", marginBottom: 40 }}>Siapa cepat, Dia dapat</div>
- 
+
           <div style={{
             background: "rgba(255,255,255,0.15)",
             borderRadius: 12,
@@ -261,7 +260,7 @@ export default function CourtBookingSystem() {
                 }}
               />
             </div>
- 
+
             <button
               onClick={() => {
                 if (!welcomeName.trim()) return;
@@ -281,7 +280,7 @@ export default function CourtBookingSystem() {
               Enter
             </button>
           </div>
- 
+
           <div style={{ marginTop: 20, fontSize: 12, color: "rgba(255,255,255,0.65)" }}>
             ⏰ Bookings open daily from <strong style={{ color: "#fff" }}>8:00 AM</strong>
           </div>
@@ -292,7 +291,7 @@ export default function CourtBookingSystem() {
       </div>
     );
   }
- 
+
   return (
     <div style={{
       minHeight: "100vh",
@@ -301,7 +300,7 @@ export default function CourtBookingSystem() {
       color: C.text,
       overflowX: "hidden",
     }}>
- 
+
       {/* Toast */}
       {toast && (
         <div style={{
@@ -315,7 +314,7 @@ export default function CourtBookingSystem() {
           {toast}
         </div>
       )}
- 
+
       {/* Modal */}
       {modal && (
         <div style={{
@@ -351,7 +350,7 @@ export default function CourtBookingSystem() {
                     }}
                   />
                 </div>
- 
+
                 {isSpecialName(playerName) && (
                   <div style={{ marginBottom: 20 }}>
                     <label style={{ fontSize: 11, letterSpacing: 2, color: C.warning, textTransform: "uppercase" }}>
@@ -391,7 +390,7 @@ export default function CourtBookingSystem() {
                     />
                   </div>
                 )}
- 
+
                 <div style={{ display: "flex", gap: 12 }}>
                   <button onClick={confirmBooking} style={{
                     flex: 1, padding: "12px", background: C.accent,
@@ -432,7 +431,7 @@ export default function CourtBookingSystem() {
           </div>
         </div>
       )}
- 
+
       {/* Header */}
       <div style={{
         borderBottom: `1px solid ${C.border}`,
@@ -464,7 +463,7 @@ export default function CourtBookingSystem() {
           </div>
         </div>
       </div>
- 
+
       {/* 8am notice banner */}
       {!canBookNow() && (
         <div style={{
@@ -475,7 +474,7 @@ export default function CourtBookingSystem() {
           ⏰ Bookings are closed right now. They open every day at <strong>8:00 AM</strong>.
         </div>
       )}
- 
+
       {view === "my-bookings" ? (
         <div style={{ padding: "40px 32px", maxWidth: 700, margin: "0 auto" }}>
           <div style={{ fontSize: 11, letterSpacing: 4, color: C.textLight, textTransform: "uppercase", marginBottom: 4 }}>Your Schedule</div>
@@ -521,7 +520,7 @@ export default function CourtBookingSystem() {
               Loading bookings...
             </div>
           )}
- 
+
           {/* Week nav */}
           <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 20 }}>
             <button onClick={() => setWeekOffset((w) => Math.max(0, w - 1))} disabled={weekOffset === 0}
@@ -550,7 +549,7 @@ export default function CourtBookingSystem() {
               →
             </button>
           </div>
- 
+
           {/* Booking grid */}
           <div key={animKey} style={{
             overflowX: "auto", border: `1px solid ${C.border}`,
@@ -656,7 +655,7 @@ export default function CourtBookingSystem() {
               </tbody>
             </table>
           </div>
- 
+
           {/* Legend */}
           <div style={{ display: "flex", gap: 24, marginTop: 20, fontSize: 11, color: C.textMuted, letterSpacing: 0.5, alignItems: "center", flexWrap: "wrap" }}>
             <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
@@ -677,7 +676,7 @@ export default function CourtBookingSystem() {
           </div>
         </div>
       )}
- 
+
       <style>{`
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideIn { from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: translateX(0); } }
@@ -689,4 +688,3 @@ export default function CourtBookingSystem() {
     </div>
   );
 }
- 
