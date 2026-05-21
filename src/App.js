@@ -28,25 +28,29 @@ const SLOTS = [
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 
+const COURT_COLORS = {
+  1: { accent: "#4f46e5", light: "#b2dfdb", dark: "#004d40" },
+};
+
 // Palette
 const C = {
-  bg: "#f0faf8",
+  bg: "#f0f4ff",
   surface: "#ffffff",
-  surfaceAlt: "#e8f5f2",
-  border: "#b2dfdb",
-  borderStrong: "#80cbc4",
-  text: "#0d3b35",
-  textMuted: "#4a7c74",
-  textLight: "#80aea8",
-  accent: "#00897b",
-  accentHover: "#00796b",
-  accentLight: "#e0f2f1",
-  danger: "#d32f2f",
-  dangerLight: "#ffebee",
-  warning: "#f57c00",
-  warningLight: "#fff3e0",
-  success: "#2e7d32",
-  successLight: "#e8f5e9",
+  surfaceAlt: "#eef2ff",
+  border: "#c7d2fe",
+  borderStrong: "#818cf8",
+  text: "#1e1b4b",
+  textMuted: "#4f46e5",
+  textLight: "#818cf8",
+  accent: "#4f46e5",
+  accentHover: "#4338ca",
+  accentLight: "#eef2ff",
+  danger: "#dc2626",
+  dangerLight: "#fef2f2",
+  warning: "#d97706",
+  warningLight: "#fffbeb",
+  success: "#059669",
+  successLight: "#ecfdf5",
 };
 
 function getWeekDates(offset = 0) {
@@ -101,7 +105,7 @@ export default function CourtBookingSystem() {
 
   const weekDates = getWeekDates(weekOffset);
   const court = COURTS[0];
- 
+  const colors = COURT_COLORS[1];
 
   useEffect(() => {
     const unsub = onSnapshot(collection(db, "bookings"), (snapshot) => {
@@ -212,7 +216,7 @@ export default function CourtBookingSystem() {
     return (
       <div style={{
         minHeight: "100vh",
-        background: `linear-gradient(135deg, ${C.accent} 0%, #26a69a 50%, #80cbc4 100%)`,
+        background: `linear-gradient(135deg, ${C.accent} 0%, #6366f1 50%, #a5b4fc 100%)`,
         fontFamily: "'Georgia', 'Times New Roman', serif",
         color: "#fff",
         display: "flex", alignItems: "center", justifyContent: "center",
@@ -304,7 +308,7 @@ export default function CourtBookingSystem() {
           background: C.surface, border: `1px solid ${C.borderStrong}`,
           color: C.text, padding: "12px 24px", borderRadius: 8,
           fontFamily: "monospace", fontSize: 14, letterSpacing: 0.5,
-          boxShadow: "0 4px 24px rgba(0,137,123,0.15)",
+          boxShadow: "0 4px 24px rgba(79,70,229,0.15)",
           animation: "slideIn 0.3s ease",
         }}>
           {toast}
@@ -314,14 +318,14 @@ export default function CourtBookingSystem() {
       {/* Modal */}
       {modal && (
         <div style={{
-          position: "fixed", inset: 0, background: "rgba(0,77,64,0.4)",
+          position: "fixed", inset: 0, background: "rgba(30,27,75,0.4)",
           display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000,
           backdropFilter: "blur(4px)",
         }} onClick={() => { setModal(null); setUploadedImage(null); }}>
           <div style={{
             background: C.surface, border: `1.5px solid ${C.border}`,
             borderRadius: 16, padding: 40, minWidth: 340, maxWidth: 420,
-            boxShadow: "0 8px 48px rgba(0,137,123,0.18)",
+            boxShadow: "0 8px 48px rgba(79,70,229,0.18)",
           }} onClick={(e) => e.stopPropagation()}>
             {modal.mode === "book" ? (
               <>
@@ -436,7 +440,7 @@ export default function CourtBookingSystem() {
         height: 64,
         position: "sticky", top: 0, zIndex: 100,
         background: C.accent,
-        boxShadow: "0 2px 12px rgba(0,137,123,0.2)",
+        boxShadow: "0 2px 12px rgba(79,70,229,0.2)",
       }}>
         <div style={{ display: "flex", alignItems: "baseline", gap: 12 }}>
           <span style={{ fontSize: 20, letterSpacing: 3, textTransform: "uppercase", fontWeight: 700, color: "#fff" }}>Taman Heliconia</span>
@@ -488,7 +492,7 @@ export default function CourtBookingSystem() {
                     borderLeft: `4px solid ${C.accent}`,
                     padding: "20px 24px", borderRadius: 12,
                     display: "flex", alignItems: "center", justifyContent: "space-between",
-                    boxShadow: "0 2px 8px rgba(0,137,123,0.07)",
+                    boxShadow: "0 2px 8px rgba(79,70,229,0.07)",
                   }}>
                     <div>
                       <div style={{ fontSize: 16, fontWeight: 600, color: C.text }}>{court.name} · {b.slot}</div>
@@ -550,7 +554,7 @@ export default function CourtBookingSystem() {
           <div key={animKey} style={{
             overflowX: "auto", border: `1px solid ${C.border}`,
             borderRadius: 12, animation: "fadeIn 0.3s ease",
-            boxShadow: "0 2px 16px rgba(0,137,123,0.08)",
+            boxShadow: "0 2px 16px rgba(79,70,229,0.08)",
             background: C.surface,
           }}>
             <table style={{ borderCollapse: "collapse", width: "100%", minWidth: 700 }}>
@@ -614,8 +618,8 @@ export default function CourtBookingSystem() {
                                 ? { background: "#f9f9f9", color: "#ddd", cursor: "not-allowed" }
                                 : booked
                                 ? {
-                                    background: isMyBooking ? C.accent : "#fff3e0",
-                                    border: `1px solid ${isMyBooking ? C.accent : "#ffcc80"}`,
+                                    background: isMyBooking ? C.accent : "#eff6ff",
+                                    border: `1px solid ${isMyBooking ? C.accent : "#93c5fd"}`,
                                     color: isMyBooking ? "#fff" : C.warning,
                                   }
                                 : {
@@ -659,7 +663,7 @@ export default function CourtBookingSystem() {
               <span>Your booking</span>
             </div>
             <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-              <div style={{ width: 16, height: 16, background: "#fff3e0", border: "1px solid #ffcc80", borderRadius: 4 }} />
+              <div style={{ width: 16, height: 16, background: "#eff6ff", border: "1px solid #93c5fd", borderRadius: 4 }} />
               <span>Booked by others</span>
             </div>
             <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
