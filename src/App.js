@@ -105,7 +105,7 @@ export default function CourtBookingSystem() {
 
   const weekDates = getWeekDates(weekOffset);
   const court = COURTS[0];
-  const colors = COURT_COLORS[1];
+ 
 
   useEffect(() => {
     const unsub = onSnapshot(collection(db, "bookings"), (snapshot) => {
