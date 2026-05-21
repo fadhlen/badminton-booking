@@ -218,7 +218,7 @@ export default function CourtBookingSystem() {
           <div style={{ fontSize: 12, color: "#ffffff", fontStyle: "italic", marginBottom: 40 }}>Siapa cepat, Dia dapat</div>
 
           <div style={{ textAlign: "left", marginBottom: 12 }}>
-            <label style={{ fontSize: 11, letterSpacing: 2, color: "#555", textTransform: "uppercase" }}>Enter your name to continue</label>
+            <label style={{ fontSize: 11, letterSpacing: 2, color: "#ffffff", textTransform: "uppercase" }}>Enter your name to continue</label>
             <input
               value={welcomeName}
               onChange={(e) => setWelcomeName(e.target.value)}
@@ -261,7 +261,7 @@ export default function CourtBookingSystem() {
           </button>
 
           <div style={{ marginTop: 24, fontSize: 11, color: "#ffffff" }}>
-            ⏰ Bookings open daily from <span style={{ color: "#0277bd" }}>8:00 AM</span>
+            ⏰ Bookings open daily from <span style={{ color: "#ffffff" }}>8:00 AM</span>
           </div>
         </div>
         <style>{`
